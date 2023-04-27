@@ -1,5 +1,3 @@
-# 忽略 .vscode 文件 
-.vscode
 
 # 忽略日志文件
 logs
