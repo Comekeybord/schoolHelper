@@ -1,12 +1,10 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-  <router-view></router-view>
+  <!-- // 设置elementplus为中文 -->
+  <el-config-provider locale="zhCn">
+    <router-view></router-view>
+  </el-config-provider>
 </template>
 
-<style scoped>
-</style>
-
-
+<style scoped></style>
