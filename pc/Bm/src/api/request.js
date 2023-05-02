@@ -59,6 +59,7 @@ const request = (options) => {
     */
     // 可以在这里配置请求头等
     // console.log(options);
+    // console.log(config);
 
     // 若为get方法，那么把params赋值为data
     options.method = options.method || 'get'

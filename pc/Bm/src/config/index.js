@@ -25,8 +25,9 @@ const EnvConfig = {
         mockApi: 'https://www.fastmock.site/mock/8c48e4d7420c41e783485aa84ebac394/api'
     },
     // 生产环境
-    pro: {
-        baseApi: '//pro/api',
+    production: {
+        // baseApi: '//pro/api',
+        baseApi: 'https://www.fastmock.site/mock/8c48e4d7420c41e783485aa84ebac394/api',//打包测试
         mockApi: 'https://www.fastmock.site/mock/8c48e4d7420c41e783485aa84ebac394/api'
     }
 }

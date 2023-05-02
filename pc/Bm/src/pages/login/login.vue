@@ -1,10 +1,12 @@
 <script setup>
 import { getCurrentInstance, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
 const route = useRoute();
 const router = useRouter();
 const { proxy } = getCurrentInstance(); // 获取全局属性代理
+const store = useUserStore();
 
 // console.log(proxy);
 
@@ -29,12 +31,23 @@ async function submit() {
   });
   if (!next) return;
   const res = await proxy.$api.login(loginForm);
-  console.log(res);
+  // console.log(res);
   if (res.code !== 200)
     return ElMessage({
       message: "账号或密码错误",
       type: "warning",
     });
+
+  // 将用户信息存储到pinia
+  // 必须先存pinia再跳转，否则会被导航守卫拦截
+  store.saveUserInfo(res.data);
+
+  // 跳转home页面
+  // console.log(router);
+  // 异步变为同步，等待跳转后再显示登录成功
+  await router.push({
+    name: "home",
+  });
 
   ElMessage({
     message: "登录成功",
@@ -42,6 +55,7 @@ async function submit() {
   });
 }
 
+// 表单验证规则
 const rules = reactive({
   account: [
     {
@@ -58,9 +72,15 @@ const rules = reactive({
     },
   ],
 });
+
+// 定义图片地址
+const logoSrc = () => new URL("../../assets/logo/logo.png", import.meta.url);
 </script>
 
 <template>
+  <!-- 智洐校园logo -->
+  <el-image :src="logoSrc()" class="logo" />
+  <!-- 登录表单 -->
   <el-form
     :label-position="right"
     label-width="48px"
@@ -111,5 +131,17 @@ const rules = reactive({
     justify-content: center;
     margin-left: 0 !important;
   }
+}
+
+// 智洐校园logo
+@logow = 130px;
+
+.logo {
+  width: 130px;
+  height: 100px;
+  position: absolute;
+  top: 63px;
+  left: 50%;
+  transform: translate(-50%);
 }
 </style>

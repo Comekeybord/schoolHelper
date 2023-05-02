@@ -1,0 +1,58 @@
+{
+  "id": "4046955",
+  "name": "智洐校园后台管理",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "智洐校园后台管理icon",
+  "glyphs": [
+    {
+      "icon_id": "9111918",
+      "name": "系统",
+      "font_class": "system",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "740915",
+      "name": "系统设置",
+      "font_class": "setting",
+      "unicode": "e6b9",
+      "unicode_decimal": 59065
+    },
+    {
+      "icon_id": "1727459",
+      "name": "224用户",
+      "font_class": "user",
+      "unicode": "e8c8",
+      "unicode_decimal": 59592
+    },
+    {
+      "icon_id": "7596853",
+      "name": "24gf-userGroup2",
+      "font_class": "userGroup",
+      "unicode": "eb2a",
+      "unicode_decimal": 60202
+    },
+    {
+      "icon_id": "16158863",
+      "name": "安全管理",
+      "font_class": "safe",
+      "unicode": "e7e9",
+      "unicode_decimal": 59369
+    },
+    {
+      "icon_id": "21433099",
+      "name": "登录记录",
+      "font_class": "loginLog",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "21497145",
+      "name": "用户反馈",
+      "font_class": "userFeeds",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    }
+  ]
+}
