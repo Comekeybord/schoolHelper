@@ -21,7 +21,7 @@ ThinkPHP 6.0
 > 把.example.env重命名为.env文件文件即可生效。具体配置见文件夹
 
 #### 1.5 配置扩展文件
-> 创建extend/yk/Ticket.php文件，该文件是token生成文件，具体配置见文件夹
+> 创建extend/ouyangke/Ticket.php文件，该文件是token生成文件，具体配置见文件夹
 
 #### 1.6 配置url重写
 1. httpd.conf配置文件中加载了mod_rewrite.so模块
