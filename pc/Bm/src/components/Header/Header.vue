@@ -2,12 +2,17 @@
 
 <template>
   <div class="container">
-    <h1>这是头部</h1>
+    <el-icon>
+      <menu />
+    </el-icon>
   </div>
 </template>
 
 <style lang="less" scoped>
 .container {
-  background-color: red;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -59,7 +59,7 @@ function toRoute(route) {
       </template>
 
       <!-- 系统设置设置当前的一些基本参数，例如系统语言、时区、系统通知等 -->
-      <el-menu-item index="2-1" @click="toRoute({ name: 'userManage' })">
+      <el-menu-item index="2-1" @click="toRoute({ name: 'config' })">
         <template #title>
           <el-icon><i class="iconfont icon-setting"></i></el-icon>
           <span>系统设置</span>
@@ -67,7 +67,7 @@ function toRoute(route) {
       </el-menu-item>
 
       <!-- 安全管理 账户安全设置，例如设置密码复杂度、开启多因素认证等 -->
-      <el-menu-item index="2-2" @click="toRoute({ name: 'userManage' })">
+      <el-menu-item index="2-2" @click="toRoute({ name: 'safe' })">
         <template #title>
           <el-icon><i class="iconfont icon-safe"></i></el-icon>
           <span>安全管理</span>
@@ -75,7 +75,7 @@ function toRoute(route) {
       </el-menu-item>
 
       <!-- 登录记录 获取系统管理后台登录记录 -->
-      <el-menu-item index="2-3" @click="toRoute({ name: 'userManage' })">
+      <el-menu-item index="2-3" @click="toRoute({ name: 'loginlog' })">
         <template #title>
           <el-icon><i class="iconfont icon-loginLog"></i></el-icon>
           <span>登录记录</span>
@@ -88,5 +88,6 @@ function toRoute(route) {
 <style lang="less" scoped>
 .aside {
   height: 100%;
+  width: 300px;
 }
 </style>
