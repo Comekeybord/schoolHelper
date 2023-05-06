@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\api\controller;
+namespace app\Api\controller;
 
 use app\BaseController;
 use think\facade\Db;
@@ -25,7 +25,7 @@ class Login
         }
 
         $password = md5($password);
-        $user = Db::table('bew_admin_user')->where('account',$account)->where('password',$password)->find();
+        $user = Db::table('admin_user')->where('account',$account)->where('password',$password)->find();
         if(empty($user)){
             $this->returnCode(10000103,[]);
         }
