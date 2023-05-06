@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 // 创建user信息仓库
 
+
 export const useUserStore = defineStore("user", {
     state: () => ({
         // 用户详细信息
@@ -17,3 +18,6 @@ export const useUserStore = defineStore("user", {
         },
     }
 })
+
+
+console.log("userstore 启用");

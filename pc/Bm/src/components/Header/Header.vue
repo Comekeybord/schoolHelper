@@ -1,11 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="container">
-    <el-icon>
-      <menu />
-    </el-icon>
-  </div>
+  <div class="container"></div>
 </template>
 
 <style lang="less" scoped>

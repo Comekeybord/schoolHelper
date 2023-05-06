@@ -46,7 +46,7 @@ async function submit() {
   // console.log(router);
   // 异步变为同步，等待跳转后再显示登录成功
   await router.push({
-    name: "home",
+    name: "userManage",
   });
 
   ElMessage({

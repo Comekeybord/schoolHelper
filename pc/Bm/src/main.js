@@ -13,6 +13,7 @@ import { createPinia } from 'pinia'
 import { useUserStore } from '@/stores/user'
 // 导入elementicon
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import { usePageStore } from '@/stores/page'
 
 
 const pinia = createPinia()
@@ -31,6 +32,7 @@ router.beforeEach((to) => {
     // ✅ 这样做是可行的，因为路由器是在其被安装之后开始导航的，
     // 而此时 Pinia 也已经被安装。
     const store = useUserStore()
+    const pageStore = usePageStore()
 
     if (!store.userInfo.ticket && to.name !== 'login') {
         ElMessage({
@@ -42,6 +44,9 @@ router.beforeEach((to) => {
             name: 'login'
         }
     }
+
+    // 记录pagestore
+    pageStore.setPageName(to.name)
 })
 
 // 挂载路由
