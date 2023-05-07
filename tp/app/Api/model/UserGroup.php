@@ -1,6 +1,4 @@
 <?php
-
-
 namespace app\api\model;
 use think\model;
 
@@ -12,12 +10,14 @@ class UserGroup extends model
      $arr1 = [];
      foreach ($groups as $group)
      {
-         $arr2 = [];
-         foreach ($group as $value)
-         {
-             array_push($arr2,$value);
-         }
-         array_push($arr1,$arr2);
+         $arr = [
+             'group_id'           =>   $group['group_id'],
+             'group_name'         =>   $group['group_name'],
+             'status'             =>   $group['status'],
+             'time_add'           =>   $group['time_add'],
+             'rights'             =>   $group['rights']
+         ];
+         array_push($arr1, $arr);
      }
      return $arr1;
     }
