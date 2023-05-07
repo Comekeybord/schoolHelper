@@ -9,13 +9,13 @@ const store = useUserStore();
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header>
-        <Header></Header>
-      </el-header>
+      <el-aside width="200px">
+        <Aside></Aside>
+      </el-aside>
       <el-container>
-        <el-aside width="200px">
-          <Aside></Aside>
-        </el-aside>
+        <el-header class="el-header">
+          <Header></Header>
+        </el-header>
         <el-main>
           <router-view name="mainContent"></router-view>
         </el-main>
@@ -27,6 +27,10 @@ const store = useUserStore();
 <style lang="less" scoped>
 .common-layout {
   height: 100%;
+
+  .el-header {
+    background-color: #333;
+  }
 }
 
 :deep(.el-container) {

@@ -49,6 +49,38 @@ const routes = [
                     mainContent: () => import('@/pages/home/User/UserGroup/UserGroup.vue')
                 }
             },
+            {
+                // 用户反馈页面
+                path: 'userFeeds',
+                name: 'userFeeds',
+                components: {
+                    mainContent: () => import('@/pages/home/User/UserFeeds/UserFeeds.vue')
+                }
+            },
+            {
+                // 系统设置
+                path: 'config',
+                name: 'config',
+                components: {
+                    mainContent: () => import('@/pages/home/System/Config/Config.vue')
+                }
+            },
+            {
+                // 安全管理
+                path: 'safe',
+                name: 'safe',
+                components: {
+                    mainContent: () => import('@/pages/home/System/Safe/Safe.vue')
+                }
+            },
+            {
+                // 登录记录
+                path: 'loginlog',
+                name: 'loginlog',
+                components: {
+                    mainContent: () => import('@/pages/home/System/LoginLog/LoginLog.vue')
+                }
+            },
         ]
     }
 ]
