@@ -96,13 +96,19 @@ class Index extends Base
     public function user_del()
     {
         $uid = input('post.uid');
+        $g1 = User::where('uid',$this->uid)->value('group_id'); // 删除者的uid
+        $g2 = User::where('uid',$uid)->value('group_id');  // 被删除者的uid
+        if($g2 < $g1)
+        {
+            return $this->returnCode(201,[],'用户权限不够');
+        }
         $result = User::where('uid',$uid)->delete();
         if($result == 1)
         {
-            return $this->returnCode(200,[]);
+            return $this->returnCode(200,[],'用户删除成功');
         }
         else{
-            return $this->returnCode(404,[]);
+            return $this->returnCode(201,[],'用户删除失败');
         }
     }
 
@@ -236,14 +242,27 @@ class Index extends Base
     {
         // mid,根据菜单ID进行删除
         $mid = input('post.mid');
+        // 根据登录用户的group_id，查看用户权限（uid->group_id->rights）
+        $g1 = User::where('uid',$this->uid)->value('group_id'); // 删除者的group_id
+        $rights = UserGroup::where('group_id',$g1)->value('rights');
+        $rights = explode(",", $rights);
+        $arr  = []; // 用户权限数组
+        foreach ($rights as $right)
+        {
+            array_push($arr,$right);
+        }
+        if(!in_array($mid,$arr)) // 如果该用户没有权限就不能删除
+        {
+            return $this->returnCode(201,[],'当前用户没有删除该菜单的权限');
+        }
         $result = Menu::where('mid',$mid)->delete();
         if($result == 1)
         {
-            return $this->returnCode(200,[]);
+            return $this->returnCode(200,[],'菜单删除成功');
         }
         else
         {
-            return $this->returnCode(404,[]);
+            return $this->returnCode(201,[],'菜单删除失败');
         }
     }
     public function getUserFeeds()

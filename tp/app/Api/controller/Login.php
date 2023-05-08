@@ -1,6 +1,7 @@
 <?php
 namespace app\Api\controller;
 
+use app\Api\model\User as UserModel;
 use app\BaseController;
 use think\facade\Db;
 use think\facade\Request;
@@ -13,49 +14,36 @@ class Login
          * 1. 判断账户和密码（如果账号密码为空，直接返回让其从新输入）
          * 2. 根据账号查找密码
          */
+        // 判断账号和密码不能为空
         $account = input('post.account');
-        if(empty($account)){
-            $this->returnCode(10000101,[]);
-        }
         $password = input('post.password');
-        if(empty($password)){
-            $this->returnCode(10000102,[]);
-        }
-
         $password = md5($password);
-        $user = Db::table('admin_user')->where('account',$account)->where('password',$password)->find();
-        if(empty($user)){
-            $this->returnCode(10000103,[]);
+        if(empty($account)){
+            $this->returnCode(201,[],'账号不能为空');
         }
-
-        $user['ticket'] = Ticket::create($user['uid'],'ouyangke');
+        if(empty($password)){
+            $this->returnCode(201,[],'密码不能为空');
+        }
+        // 通过账号和密码查看用户是否存在
+        $user = UserModel::where('account',$account)->where('password',$password)->find();
+        if(empty($user)){
+            $this->returnCode(201,[],'账号或密码错误');
+        }
+        $user['token'] = Ticket::create($user['uid'],'ouyangke'); // 用户存在生成token值
         unset($user['password'],$user['uid']);
-        $this->returnCode(200,$user);  // 将ticket值返回到后端
-
+        $this->returnCode(200,$user,'登录成功');  // 将token值返回到后端
     }
-
-    public function returnCode($code=0,$data=[]){
+    public function returnCode($code=0,$data=[],$msg){
         /**
          * $code: 状态码
          * $data: 返回数据
          * $msg: 状态码所代表的意思
          */
-        $code_msg = [
-            100 => '请先登录',
-            200 => '成功',
-            404 =>  '失败',
-            10000101 => '账户不能为空',
-            10000102 => '密码不能为空',
-            10000103 => '账号或密码输入错误',
-            10000104 => '用户组不能为空',
-        ];
-
         $arr = [  // 重新封装
             'code' => $code,
-            'msg' => $code_msg[$code],
+            'msg' => $msg,
             'data' => $data
         ];
-
         echo json_encode($arr);
         if($code != 0){
             exit;
