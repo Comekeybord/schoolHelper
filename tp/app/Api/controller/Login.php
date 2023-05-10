@@ -49,4 +49,8 @@ class Login
             exit;
         }
     }
+    public function index()
+    {
+        return 111;
+    }
 }
