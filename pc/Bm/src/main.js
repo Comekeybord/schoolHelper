@@ -34,7 +34,7 @@ router.beforeEach((to) => {
     const store = useUserStore()
     const pageStore = usePageStore()
 
-    if (!store.userInfo.ticket && to.name !== 'login') {
+    if (!store.userInfo.token && to.name !== 'login') {
         ElMessage({
             type: 'warning',
             message: '请先登录'

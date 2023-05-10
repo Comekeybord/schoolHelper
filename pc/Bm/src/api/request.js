@@ -21,11 +21,13 @@ const service = axios.create({
 service.interceptors.request.use((req) => {
     // 自定义header
     // jwt-token认证会用到
-    let ticket = window.localStorage.getItem('ticket'); // 从浏览器获取ticket
-    if(ticket)  // 有ticket值就把ticket值加入到请求参数中
+    // console.log(req);
+    let token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : false; // 从浏览器获取token
+    if (token)  // 有token值就把token值加入到请求参数中
     {
-        req.data.ticket = ticket;
+        req.data.token = token;
     }
+    // console.log(req);
     return req
 })
 

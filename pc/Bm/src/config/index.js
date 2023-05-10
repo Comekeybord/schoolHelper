@@ -16,8 +16,8 @@ const env = import.meta.env.MODE || 'prod'
 const EnvConfig = {
     // 开发环境
     development: {
-        baseApi: 'http://www.tp.com/api',
-        mockApi: 'https://www.fastmock.site/mock/8c48e4d7420c41e783485aa84ebac394/api'
+        baseApi: 'https://console-mock.apipost.cn/mock/1af52de6-db97-4693-a431-8af84220f7eb/api',
+        mockApi: 'https://console-mock.apipost.cn/mock/1af52de6-db97-4693-a431-8af84220f7eb/api'
     },
     // 测试环境
     test: {

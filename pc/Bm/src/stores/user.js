@@ -16,6 +16,12 @@ export const useUserStore = defineStore("user", {
             // 存储整个用户信息
             localStorage.setItem('userInfo', JSON.stringify(userInfo))
         },
+        loginOut() {
+            // 退出登录
+            this.userInfo = ''
+            // 移除用户信息
+            localStorage.removeItem("userInfo");
+        }
     }
 })
 

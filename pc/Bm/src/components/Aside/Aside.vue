@@ -21,6 +21,16 @@ function toRoute(route) {
     :default-active="pageStore.currentPageName"
     text-color="#fff"
   >
+    <!-- 个人中心 -->
+    <el-menu-item index="userCenter" @click="toRoute({ name: 'userCenter' })">
+      <template #title>
+        <el-icon>
+          <User></User>
+        </el-icon>
+        <span>个人中心</span>
+      </template>
+    </el-menu-item>
+
     <!-- 多级菜单 -->
     <!-- 用户管理 -->
     <el-sub-menu index="1">
@@ -90,6 +100,5 @@ function toRoute(route) {
 <style lang="less" scoped>
 .aside {
   height: 100%;
-  width: 300px;
 }
 </style>

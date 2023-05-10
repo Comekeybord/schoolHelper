@@ -34,8 +34,16 @@ const routes = [
         props: true,
         children: [
             {
-                // 默认展示用户管理页
+                // 默认展示个人中心
                 path: '',
+                name: 'userCenter',
+                components: {
+                    mainContent: () => import('@/pages/home/User/UserCenter/UserCenter.vue')
+                }
+            },
+            {
+                // 示用户管理页
+                path: 'userManage',
                 name: 'userManage',
                 components: {
                     mainContent: () => import('@/pages/home/User/UserManage/UserManage.vue')

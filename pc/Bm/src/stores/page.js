@@ -8,7 +8,7 @@ import { defineStore } from 'pinia'
 export const usePageStore = defineStore('page', {
     state: () => ({
         // 存储当前页面路由名
-        currentPageName: ''
+        currentPageName: '',
     }),
     actions: {
         setPageName(name) {

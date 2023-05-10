@@ -46,7 +46,7 @@ async function submit() {
   // console.log(router);
   // 异步变为同步，等待跳转后再显示登录成功
   await router.push({
-    name: "userManage",
+    name: "userCenter",
   });
 
   ElMessage({
@@ -102,7 +102,7 @@ const logoSrc = () => new URL("../../assets/logo/logo.png", import.meta.url);
 
     <!-- 密码输入框 -->
     <el-form-item label="密码" prop="password">
-      <el-input v-model="loginForm.password" />
+      <el-input v-model="loginForm.password" type="password" />
     </el-form-item>
 
     <!-- 登录按钮 -->

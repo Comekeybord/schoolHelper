@@ -8,8 +8,17 @@ export default {
     login(data) {
         return request({
             method: 'post',
-            url: '/login',
+            url: '/user/login',
             data,
+        })
+    },
+
+    // 获取用户列表
+    getUserList() {
+        return request({
+            method: 'post',
+            url: '/user/user_list',
+            data: {}
         })
     }
 }
