@@ -16,13 +16,13 @@ const env = import.meta.env.MODE || 'prod'
 const EnvConfig = {
     // 开发环境
     development: {
-        baseApi: 'https://console-mock.apipost.cn/mock/1af52de6-db97-4693-a431-8af84220f7eb/api',
-        mockApi: 'https://console-mock.apipost.cn/mock/1af52de6-db97-4693-a431-8af84220f7eb/api'
+        baseApi: 'https://localhost:8000/api',
+        mockApi: 'https://www.fastmock.site/mock/8c48e4d7420c41e783485aa84ebac394/api'
     },
     // 测试环境
     test: {
         baseApi: '//test/api',
-        mockApi: 'https://www.fastmock.site/mock/8c48e4d7420c41e783485aa84ebac394/api'
+        mockApi: ''
     },
     // 生产环境
     production: {

@@ -91,6 +91,7 @@ const logoSrc = () => new URL("../../assets/logo/logo.png", import.meta.url);
     hide-required-asterisk="true"
     status-icon
     ref="loginRef"
+    @keyup.enter="submit"
   >
     <!-- 提示语 -->
     <h3>智洐校园后台管理系统登录</h3>

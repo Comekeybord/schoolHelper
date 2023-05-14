@@ -7,7 +7,6 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
 
-
 // 配置错误信息
 const REQUEST_ERROR = '请求错误，请重试！'
 
@@ -22,12 +21,14 @@ service.interceptors.request.use((req) => {
     // 自定义header
     // jwt-token认证会用到
     // console.log(req);
+    if (!req.data) req.data = null
+
     let token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : false; // 从浏览器获取token
     if (token)  // 有token值就把token值加入到请求参数中
     {
         req.data.token = token;
     }
-    // console.log(req);
+
     return req
 })
 
@@ -55,6 +56,7 @@ service.interceptors.response.use((res) => {
 
 // 封装核心函数
 const request = (options) => {
+
     /* 
     options eg:
     {
@@ -86,6 +88,7 @@ const request = (options) => {
     } else {
         service.defaults.baseURL = isMock ? config.mockApi : config.baseApi
     }
+
     // 返回请求结果
     return service(options)
 }
