@@ -56,5 +56,32 @@ export default {
             url: '/UserGroup/group_list',
             data
         })
+    },
+
+    // 删除用户组
+    groupDel(data) {
+        return request({
+            method: 'post',
+            url: '/UserGroup/group_del',
+            data
+        })
+    },
+
+    // 获取菜单
+    getMenuList(data) {
+        return request({
+            method: 'post',
+            url: '/menu/menu_list',
+            data
+        })
+    },
+
+    // 添加修改用户组
+    addGroup(data) {
+        return request({
+            method: 'post',
+            url: '/UserGroup/group_add',
+            data
+        })
     }
 }

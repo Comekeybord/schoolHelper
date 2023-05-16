@@ -1,15 +1,6 @@
 <script setup>
 import { toNumber } from "lodash";
-import {
-  computed,
-  getCurrentInstance,
-  nextTick,
-  onBeforeMount,
-  onMounted,
-  reactive,
-  ref,
-  watch,
-} from "vue";
+import { getCurrentInstance, onMounted, reactive, ref, watch } from "vue";
 // 导入自定义hook 显示隐藏加载框
 import loding from "@/hooks/useLoding";
 // 导入自定义表单校验规则
@@ -156,8 +147,8 @@ const getUserGroup = async () => {
   // console.log(res);
   if (res.code !== 200) {
     ElMessage({
-      message: "获取用户组失败!",
-      type: "warning",
+      message: "获取用户组失败,请刷新页面重试!",
+      type: "error",
     });
     return;
   }
@@ -170,6 +161,7 @@ const getUserGroup = async () => {
       Object.assign(groupName, tmpObj);
     });
   });
+  // console.log(groupName);
 };
 
 // 翻页
@@ -283,14 +275,12 @@ const dialogClose = (done, updateUserList = false) => {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning",
-  })
-    .then(async () => {
-      dialogConfig.dialogVisible = false;
-      // 清除表单
-      await proxy.$refs.addUserRef.resetFields();
-      if (updateUserList) getUserList();
-    })
-    .catch(() => {});
+  }).then(async () => {
+    dialogConfig.dialogVisible = false;
+    // 清除表单
+    await proxy.$refs.addUserRef.resetFields();
+    if (updateUserList) getUserList();
+  });
 };
 
 // 取消编辑用户
@@ -351,8 +341,8 @@ const userSubmit = async () => {
       type: "success",
     });
 
-    // 传递参数更新用户列表
-    dialogClose(true, true);
+    // 更新用户列表
+    getUserList();
   }
 };
 </script>
@@ -383,6 +373,7 @@ const userSubmit = async () => {
       :cell-style="{ 'text-align': 'center' }"
       highlight-current-row="true"
       :row-class-name="userTableRowClassName"
+      empty-text="无数据"
     >
       <el-table-column
         v-for="(item, index) in tableConfig"
@@ -571,7 +562,7 @@ const userSubmit = async () => {
         :rules="[
           {
             required: true,
-            message: '必填项',
+            message: '必选项',
           },
         ]"
       >
