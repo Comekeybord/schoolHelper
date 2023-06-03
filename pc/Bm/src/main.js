@@ -19,6 +19,9 @@ import { usePageStore } from '@/stores/page'
 const pinia = createPinia()
 const app = createApp(App)
 
+// 屏蔽警告信息
+app.config.warnHandler = () => null;
+
 //使用elementicon
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

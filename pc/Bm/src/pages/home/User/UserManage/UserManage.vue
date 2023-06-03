@@ -10,7 +10,7 @@ import {
   checkPwdStrict,
   checkAccStrict,
 } from "@/model/formRules";
-import { ElMessage, ElMessageBox } from "element-plus";
+
 const { proxy } = getCurrentInstance();
 
 onMounted(() => {

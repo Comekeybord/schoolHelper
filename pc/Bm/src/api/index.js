@@ -83,5 +83,41 @@ export default {
             url: '/UserGroup/group_add',
             data
         })
+    },
+
+    // 获取反馈列表
+    getUserFeeds(data) {
+        return request({
+            method: 'post',
+            url: '/system/getUserFeeds',
+            data
+        })
+    },
+
+    // 回复用户反馈
+    backUserFeed(data) {
+        return request({
+            method: 'post',
+            url: '/system/backUserFeed',
+            data
+        })
+    },
+
+    // 删除用户反馈
+    delUserFeed(data) {
+        return request({
+            method: 'post',
+            url: '/system/delUserFeed',
+            data
+        })
+    },
+
+    // 管理员信息修改
+    adminEdit(data) {
+        return request({
+            method: 'post',
+            url: '/user/adminEdit',
+            data
+        })
     }
 }

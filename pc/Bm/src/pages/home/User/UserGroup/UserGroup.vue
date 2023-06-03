@@ -313,7 +313,7 @@ const groupSubmit = async () => {
 <template>
   <!-- 用户组管理页头部，添加 搜索 -->
   <div class="user_header">
-    <el-button type="primary" @click="GroupAdd">+添加用户</el-button>
+    <el-button type="primary" @click="GroupAdd">+添加用户组</el-button>
     <!-- 搜索框 -->
     <el-form :inline="true" :model="searchInput" class="search-form">
       <el-form-item label="请输入关键字">
@@ -346,7 +346,11 @@ const groupSubmit = async () => {
         :width="item.width"
         :fixed="item.fixed"
       />
-      <el-table-column class="group-rights" label="用户组权限" prop="rights">
+      <el-table-column
+        class="group-rights"
+        label="用户组权限(鼠标经过显示)"
+        prop="rights"
+      >
         <template #default="scope">
           <el-popover
             title="用户组权限列表"
@@ -363,7 +367,7 @@ const groupSubmit = async () => {
               >
             </template>
             <template #reference>
-              <el-tag>{{ scope.row.rights.length }}个权限(鼠标经过显示)</el-tag>
+              <el-tag>{{ scope.row.rights.length }}个权限</el-tag>
             </template>
           </el-popover>
         </template>
