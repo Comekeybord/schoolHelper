@@ -306,44 +306,44 @@ const userSubmit = async () => {
   });
   if (!next) return;
   // 判断是添加还是编辑,根据表单中隐藏的uid判断
-  if (addUserForm.uid !== 0) {
-    // 编辑用户
-    // 可能会修改性别和管理组,将键值修改成对应的值
-    // 修改sex
-    for (var k in sex) {
-      if (addUserForm.sex == k) {
-        addUserForm.sex = sex[addUserForm.sex];
-      }
-    }
-    // 修改group
-    for (var k in groupName) {
-      if (addUserForm.group_name == k) {
-        addUserForm.group_name = groupName[addUserForm.group_name];
-      }
-    }
-    // 修改status
-    for (var k in userStatus) {
-      if (addUserForm.status == k) {
-        addUserForm.status = userStatus[addUserForm.status];
-      }
-    }
 
-    const res = await proxy.$api.addUser(addUserForm);
-    // console.log(res);
-    if (res.code !== 200) {
-      await ElMessageBox.alert(res.msg, "提示", {
-        confirmButtonText: "确定",
-        type: "warning",
-      });
+  // 编辑用户
+  // 可能会修改性别和管理组,将键值修改成对应的值
+  // 修改sex
+  for (var k in sex) {
+    if (addUserForm.sex == k) {
+      addUserForm.sex = sex[addUserForm.sex];
     }
+  }
+  // 修改group
+  for (var k in groupName) {
+    if (addUserForm.group_name == k) {
+      addUserForm.group_name = groupName[addUserForm.group_name];
+    }
+  }
+  // 修改status
+  for (var k in userStatus) {
+    if (addUserForm.status == k) {
+      addUserForm.status = userStatus[addUserForm.status];
+    }
+  }
+
+  const res = await proxy.$api.addUser(addUserForm);
+  // console.log(res);
+  if (res.code !== 200) {
     await ElMessageBox.alert(res.msg, "提示", {
       confirmButtonText: "确定",
-      type: "success",
+      type: "warning",
     });
-
-    // 更新用户列表
-    getUserList();
+    return;
   }
+  await ElMessageBox.alert(res.msg, "提示", {
+    confirmButtonText: "确定",
+    type: "success",
+  });
+
+  // 更新用户列表
+  getUserList();
 };
 </script>
 
