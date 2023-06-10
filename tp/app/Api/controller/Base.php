@@ -5,7 +5,7 @@ use ouyangke\Ticket;
 use think\Exception;
 
 class Base{
-    public $uid;
+    public $uid; // $uid身份认证标识
     public function __construct(){
         header("Access-Control-Allow-Origin:*");
         $post = input('post.');
@@ -24,25 +24,12 @@ class Base{
          * $code: 状态码
          * $data: 返回数据
          * $msg: 状态码所代表的意思
-         */
-//        $code_msg = [
-//            0         => '不清楚',
-//            100       => '请先登录',
-//            200       => '成功',
-//            201       => '失败',
-//            404       => '失败',
-//            10000101  => '账户不能为空',
-//            10000102  => '密码不能为空',
-//            10000103  => '账号或密码输入错误',
-//            10000104  => '菜单信息填写不全，请从新填写',
-//        ];
-
+         */;
         $arr = [  // 重新封装
             'code' => $code,
             'msg' => $msg,
             'data' => $data
         ];
-
         echo json_encode($arr);
         if($code != 0){
             exit;
