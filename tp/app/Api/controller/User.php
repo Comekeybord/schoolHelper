@@ -5,6 +5,7 @@ use app\Api\model\User as UserModel;
 use app\Api\model\UserGroup;
 use ouyangke\Ticket;
 use think\facade\Db;
+use think\response\Json;
 
 
 class User extends Base
@@ -28,21 +29,35 @@ class User extends Base
                 'name'             =>   $user['name'],
                 'phone'            =>   $user['phone'],
                 'qq'               =>   $user['qq'],
+                'sex'              =>   $user['sex']===1?'男':'女',
                 'group_name'       =>   $group_name,
                 'status'           =>   $user['status']
             ];
             array_push($arr1,$arr);
         }
         $arr = [];
-        $page = input('get.page');
-        for($i = ($page-1)*10;$i<$page*10;$i++)
+        $arr2 = [];
+        $limit = input('post.limit');
+        for($i = 0;$i<count($arr1);$i++)  // 根据每页的数据limit进行数据整理
         {
             if($i<count($arr1))
             {
-                array_push($arr,$arr1[$i]);
+                array_push($arr2,$arr1[$i]);
+            }else
+            {
+                break;
+            }
+            if(($i+1) % $limit === 0)
+            {
+                array_push($arr,$arr2);
+                $arr2 = [];
             }
         }
-        return $this->returnCode(200,$arr);  // 如果需要对JSON数据进行操作和转换，应该使用thinkphp6中的json函数；如果只是需要将PHP变量转换为JSON格式的字符串，则可以使用json_encode()函数。
+        if(!empty($arr2))
+        {
+            array_push($arr,$arr2);
+        }
+        return $this->returnCode(200,$arr); // 如果需要对JSON数据进行操作和转换，应该使用thinkphp6中的json函数；如果只是需要将PHP变量转换为JSON格式的字符串，则可以使用json_encode()函数。
     }
     public function user_add()
     {
@@ -67,10 +82,6 @@ class User extends Base
         // 通过用户组名字获取用户组ID
         $group_id = UserGroup::where('group_name',$data['group_name'])->value('group_id');
         $gid = UserModel::where('uid',$this->uid)->value('group_id');  // 当前用户的用户组ID
-        if($group_id < $gid)  // 当前用户ID如果大于添加用户组ID，说明权限不构
-        {
-            return $this->returnCode(201,[],'当前用户不能添加或修改该用户组下的用户');
-        }
         $arr = [  // 数据整理
             "account"     => $data['account'],
             "password"    => md5($data['password']),
@@ -86,6 +97,10 @@ class User extends Base
         ];
         if($data['uid'] == 0) // 插入数据
         {
+            if($group_id < $gid)  // 当前用户ID如果大于添加用户组ID，说明权限不构(可以添加同权限或者比自己权限低的用户)
+            {
+                return $this->returnCode(201,[],'当前用户不能添加或修改该用户组下的用户');
+            }
             $result = UserModel::insert($arr);
             if($result == 1)
             {
@@ -97,6 +112,10 @@ class User extends Base
         }
         else  // 修改数据
         {
+            if($group_id <= $gid)  // 当前用户ID如果大于添加用户组ID，说明权限不构（不能够修改和自己一样或者比自己权限大的用户）
+            {
+                return $this->returnCode(201,[],'当前用户不能添加或修改该用户组下的用户');
+            }
             $result = UserModel::where('uid', $data['uid'])->update($arr);  // 根据用户ID修改数据
             if($result == 1)
             {
@@ -125,5 +144,61 @@ class User extends Base
         else{
             return $this->returnCode(201,[],'用户删除失败');
         }
+    }
+    public function user_search()
+    {
+        $value = input('post.');
+        $key = $value['keyword'];
+        $account = UserModel::select(); // $account为所有的信息
+        $userList = [];  // 符合搜索条件的信息
+        $total = 0;   // 搜索的条数
+        foreach ($account as $item)
+        {
+            $group = UserGroup::where('group_id',$item['group_id'])->value('group_name');
+            if($item['account'] === $key | $item['name'] === $key | $group === $key)  // 只要account,name用户组有一个符合搜索条件，就把整条数据push到$userList中
+            {
+                $arr = [  // 数据整理
+                    "uid"        =>  $item['uid'],
+                    "account"    =>  $item['account'],
+                    "name"       =>  $item['name'],
+                    "phone"      =>  $item['phone'],
+                    "qq"         =>  $item['qq'],
+                    "group_id"   =>  $group,
+                    "status"     =>  $item['status']==1?'开启':'关闭',
+                ];
+                array_push($userList, $arr);
+                $total = $total + 1;
+            }
+        }
+        $arr = [];  // 分页
+        $limit = $value['limit'];  // 每个页面显示的条数
+        $page = $value['page'];  // 第几页
+        for($i = ($page-1)*$limit;$i<$page*$limit;$i++)
+        {
+            if($i<count($userList))
+            {
+                array_push($arr,$userList[$i]);
+            }
+        }
+        if(!empty($userList))
+        {
+            return json_encode([
+                "code" => 200,
+                "msg"  => '请求成功',
+                "data" => [
+                    "userList" => $arr,
+                    "total"    => $total>count($arr)?count($arr):$total
+                ]
+            ]);
+        }
+        else
+        {
+            return json_encode([
+            "code" => 201,
+            "msg"  => '请求失败',
+            "data" => []
+            ]);
+        }
+
     }
 }

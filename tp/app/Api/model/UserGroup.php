@@ -1,5 +1,7 @@
 <?php
-namespace app\api\model;
+
+
+namespace app\api\ model;
 use think\model;
 
 class UserGroup extends model
