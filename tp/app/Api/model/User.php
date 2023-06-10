@@ -17,6 +17,7 @@ class User extends model
                 'name'             =>   $user['name'],
                 'phone'            =>   $user['phone'],
                 'qq'               =>   $user['qq'],
+                'sex'              =>   $user['sex'],
                 'group_id'         =>   $user['group_id'],
                 'status'           =>   $user['status']
             ];

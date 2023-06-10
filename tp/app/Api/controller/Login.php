@@ -33,20 +33,19 @@ class Login
         $user['token'] = Ticket::create($user['uid'],'ouyangke'); // 用户存在生成token值
         unset($user['password'],$user['uid']);
 
-        $uid = UserModel::where('account',$account)->value('uid');  // 获取用户登录IP
-        $request = new addr('https://rest.ipw.cn/api/ip/queryThird',['ip'  => '61.136.204.140']);
-        $content = $request->post();             // 获取指定接口的全部类容
-
-        halt($content);
-        $log = [
-            'uid'      =>  $uid,
-            'data'     =>  date('Y-m-d H:i:s'),
-            'addr'     =>  $content['data']['city']
-        ];
-        halt('1');
-        Feeds::insert($log);
+//        $uid = UserModel::where('account',$account)->value('uid');  // 获取用户登录IP
+//        $request = new addr('https://rest.ipw.cn/api/ip/queryThird',['ip'  => '61.136.204.140']);
+//        $content = $request->post();             // 获取指定接口的全部类容
+//
+//        $log = [
+//            'uid'      =>  $uid,
+//            'data'     =>  date('Y-m-d H:i:s'),
+//            'addr'     =>  $content['data']['city']
+//        ];
+//        Feeds::insert($log);
         $this->returnCode(200,$user,'登录成功');  // 将token值返回到后端
     }
+
     public function returnCode($code=0,$data=[],$msg){
         /**
          * $code: 状态码
