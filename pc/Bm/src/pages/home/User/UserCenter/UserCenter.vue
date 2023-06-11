@@ -21,26 +21,12 @@ console.log(userInfo);
 
 // 修改管理员表单
 const adminInfo = reactive({
-  account: "",
   oldPwd: "",
   newPwd: "",
-  group_name: "",
 });
 
 // 修改管理员信息表单验证规则
 const adminFormRules = reactive({
-  account: [
-    {
-      required: true,
-      message: "此项必填",
-      trigger: "submit",
-    },
-    {
-      validator: checkAccStrict,
-      message: "4到16位（字母，数字，下划线，减号）",
-      trigger: "blur",
-    },
-  ],
   oldPwd: [
     {
       required: true,
@@ -62,18 +48,6 @@ const adminFormRules = reactive({
     {
       validator: checkPwdStrict,
       message: "大写字母，小写字母，数字，特殊符号",
-      trigger: "blur",
-    },
-  ],
-  group_name: [
-    {
-      required: true,
-      message: "此项必填",
-      trigger: "submit",
-    },
-    {
-      validator: checkGroupNameStrict,
-      message: "中文和数字",
       trigger: "blur",
     },
   ],
@@ -156,17 +130,11 @@ async function formReset() {
           ref="adminRef"
           :rules="adminFormRules"
         >
-          <el-form-item label="用户账号" prop="account">
-            <el-input v-model.trim="adminInfo.account" />
-          </el-form-item>
           <el-form-item label="旧密码" prop="oldPwd">
             <el-input type="password" v-model.trim="adminInfo.oldPwd" />
           </el-form-item>
           <el-form-item label="新密码" prop="newPwd">
             <el-input type="password" v-model.trim="adminInfo.newPwd" />
-          </el-form-item>
-          <el-form-item label="所属组" prop="group_name">
-            <el-input v-model.trim="adminInfo.group_name" />
           </el-form-item>
           <el-form-item>
             <el-button @click="adminEdit">确认修改</el-button>

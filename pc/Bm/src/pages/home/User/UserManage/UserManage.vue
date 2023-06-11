@@ -10,6 +10,7 @@ import {
   checkPwdStrict,
   checkAccStrict,
 } from "@/model/formRules";
+import { ElMessage } from "element-plus";
 
 const { proxy } = getCurrentInstance();
 
@@ -179,7 +180,16 @@ const handleSearch = async () => {
     limit: navConfig.limit,
     page: navConfig.page,
   };
-  const { data } = await proxy.$api.userSearch(reqData);
+  const res = await proxy.$api.userSearch(reqData);
+  if (res.code !== 200) {
+    ElMessage({
+      message: "无搜索结果!",
+      type: "warning",
+    });
+    return;
+  }
+  const data = res.data;
+  // console.log(res);
   // console.log(data);
   navConfig.total = data.total;
   userList.value = data.userList;

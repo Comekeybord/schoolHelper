@@ -17,7 +17,7 @@ const EnvConfig = {
     // 开发环境
     development: {
         baseApi: 'https://localhost:8000/api',
-        mockApi: 'https://www.fastmock.site/mock/8c48e4d7420c41e783485aa84ebac394/api'
+        mockApi: 'http://192.168.137.1:9000/api'
     },
     // 测试环境
     test: {

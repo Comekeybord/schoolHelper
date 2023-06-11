@@ -107,6 +107,7 @@ const getUserGroup = async () => {
   const res = await proxy.$api.getUserGroup({ limit: navConfig.limit });
   // console.log(res);
   const { data } = res;
+  console.log(data);
   // 计算总用户组数
   let sum = 0;
   let dataList = [];
