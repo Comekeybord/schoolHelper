@@ -1,9 +1,7 @@
 <script setup>
-import { checkGroupNameStrict } from "@/model/formRules";
-import { filter, isNumber, toNumber, trim } from "lodash";
+import { trim } from "lodash";
 import { onMounted, reactive, getCurrentInstance, ref, watch } from "vue";
 import loding from "@/hooks/useLoding";
-import { ElMessage, ElMessageBox } from "element-plus";
 const { proxy } = getCurrentInstance();
 
 /*
@@ -66,42 +64,6 @@ const dialogConfig = reactive({
   dialogTitle: "",
 });
 
-// 添加菜单信息
-const menuList = ref([]);
-
-// 定义用户组状态
-const groupStatus = reactive({
-  1: "开启",
-  0: "关闭",
-});
-
-// 定义表单规则
-const rules = reactive({
-  group_name: [
-    {
-      required: true,
-      message: "必填项",
-    },
-    {
-      validator: checkGroupNameStrict,
-      message: "中文和数字组成",
-      trigger: "blur",
-    },
-  ],
-  status: [
-    {
-      required: true,
-      message: "必填项",
-    },
-  ],
-  rights: [
-    {
-      required: true,
-      message: "必选项",
-    },
-  ],
-});
-
 // 定义筛选配置
 const filterConfig = reactive({
   ok: false,
@@ -148,20 +110,28 @@ async function getUserFeeds() {
   // console.log(res);
   if (res.code !== 200) {
     ElMessage({
-      message: "用户反馈列表获取失败,请刷新页面重试!",
+      message: res.msg,
       type: "error",
     });
+    return;
+  } else if (res.data.length == 0) {
+    ElMessage({
+      message: "反馈列表为空!",
+      type: "info",
+    });
+    return;
   }
+  loding.hideLoading();
 
   // 设置nav配置
   navConfig.total = res.data.length;
+  console.log(getNavList(res.data));
   feedList.value = getNavList(res.data);
   tableData.value = getNavList(res.data);
-  loding.hideLoading();
 }
 // 筛选反馈状态
 function feedFilter() {
-  if (!filterConfig.no && !filterConfig.ok) return;
+  if (!filterConfig.no && !filterConfig.ok) return console.log(1);
   // console.log("================");
   let data = tableData.value;
   let resList = [];
@@ -189,7 +159,7 @@ function feedFilter() {
   // console.log(resList);
   navConfig.total = total;
   resList = getNavList(resList);
-  // console.log(resList);
+  console.log(resList);
   // console.log("筛选完成");
   tableData.value = resList;
 }
@@ -237,6 +207,12 @@ const handleSearch = () => {
   tableData.value = resList;
 };
 
+// 修改分页下标
+const currentChange = (page) => {
+  // console.log(e);
+  navConfig.currentChange = page;
+};
+
 // 回复消息
 function feedBack(row) {
   // console.log(row.feed);
@@ -273,16 +249,17 @@ async function confirmDrawer() {
 
   if (res.code !== 200) {
     ElMessage({
-      message: "回复失败，请重试！",
+      message: res.msg,
       type: "warning",
     });
+    loding.hideLoading();
     return;
   }
 
   loding.hideLoading();
 
   ElMessage({
-    message: "回复成功！",
+    message: res.msg,
     type: "success",
   });
 
@@ -301,17 +278,19 @@ async function feedDelete(row) {
     type: "warning",
   }).then(async () => {
     const res = await proxy.$api.delUserFeed({ fid: row.fid });
+    // console.log(res);
     if (res.code !== 200) {
       ElMessage({
-        message: "删除失败，请重试!",
+        message: res.msg,
         type: "error",
       });
       return;
     }
     ElMessage({
-      message: "删除成功!",
+      message: res.msg,
       type: "success",
     });
+    getUserFeeds();
   });
 }
 // #endregion
@@ -409,7 +388,7 @@ async function feedDelete(row) {
           </el-popover>
         </template>
         <template #default="scope">
-          <el-tag :type="scope.row.feed_status === 0 ? 'primary' : 'success'">
+          <el-tag :type="scope.row.feed_status == 0 ? 'primary' : 'success'">
             {{ scope.row.feed_status == 0 ? "待处理" : "已处理" }}
           </el-tag>
         </template>

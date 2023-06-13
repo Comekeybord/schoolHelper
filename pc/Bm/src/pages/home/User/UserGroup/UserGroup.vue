@@ -289,15 +289,18 @@ const groupSubmit = async () => {
   }
 
   // 请求
+  // console.log(addGroupForm);
   const res = await proxy.$api.addGroup(addGroupForm);
   // console.log(res);
-  const { data } = res;
+
   if (res.code !== 200) {
     ElMessageBox.alert(res.msg, "提示", {
       confirmButtonText: "确定",
       type: "warning",
     });
+    return;
   }
+
   ElMessageBox.alert(res.msg, "提示", {
     confirmButtonText: "确定",
     type: "success",
@@ -308,6 +311,9 @@ const groupSubmit = async () => {
   if (turnRights) {
     addGroupForm.rights = tmpRightsList;
   }
+
+  // 重新请求数据
+  getUserGroup();
 };
 </script>
 

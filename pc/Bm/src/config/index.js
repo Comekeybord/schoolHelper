@@ -8,7 +8,7 @@
 */
 
 // 获取当前开发环境
-const env = import.meta.env.MODE || 'prod'
+const env = import.meta.env.MODE || 'production'
 
 // console.log(import.meta)
 
